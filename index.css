@@ -1,3 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+header{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+}
+
 body {
-    background-color: green;
+    background-color: rgba(90, 116, 187, 0.384);
+    
+
   }
+
+.quiz-start-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto; 
+  margin-right: auto;
+  align-items: center;
+  
+}
+/*
+.score-display{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+*/
