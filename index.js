@@ -47,8 +47,8 @@ function getCurrentQandA() {
                 <button type="submit" id="button-submit-answer">Submit</button>
                 <button type="submit" id="button-next-question">Next Question</button>
            </section>
-           <section class="feedback-correct ">correct</section>
-           <section class="feedback-incorrect ">incorrect</section>
+           <section class="feedback-correct ">correct!</section>
+           <section class="feedback-incorrect ">oops! the answer is ${questionArray[currentIndex].answer}</section>
            
            <section class="score-display">question ${questionTracker} | score ${currentScore}</section>
            </form>`;
@@ -62,7 +62,7 @@ function submitAnswer() {
   updateStats();
   giveFeedback();
 }
-// selectedAnswer value is a string, look at boolean stuff and if statements
+
 function checkUserAnswer(selectedAnswer) {
   if (selectedAnswer == questionArray[currentIndex].answer) {
     $(".feedback-correct").show();
@@ -94,7 +94,6 @@ function reloadStartPage() {}
 
 function doQuiz() {
   startQuiz();
-  //submitAnswer();
 }
 
 $(doQuiz);
