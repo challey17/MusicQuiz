@@ -15,7 +15,6 @@ function bindButtons() {
     event.preventDefault();
     submitAnswer();
     checkUserAnswer(selectedAnswer);
-    updateStats();
   });
   $("#button-next-question").on("click", function(event) {
     event.preventDefault();
@@ -89,11 +88,11 @@ function getSummaryPage() {
   <button type="submit" class="button-reset-quiz">Reset</button>
 </section>
 `;
-
   return endPage;
 }
+
 function endquiz() {
-  if (currentIndex == 5) {
+  if (questionTracker == questionArray.length) {
     $("#button-next-question").on("click", function(event) {
       event.preventDefault();
 
@@ -101,7 +100,7 @@ function endquiz() {
     });
   }
 }
-
+endquiz();
 //returns to start page with blank stats
 function reloadStartPage() {}
 
