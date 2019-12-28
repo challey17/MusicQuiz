@@ -14,9 +14,7 @@ function startQuiz() {
 function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
-    submitAnswer(selectedAnswer);
-    console.log(selectedAnswer);
-    checkUserAnswer(selectedAnswer);
+    submitAnswer();
   });
   $("#button-next-question").on("click", function(event) {
     event.preventDefault();
@@ -64,10 +62,11 @@ function getCurrentQandA() {
 
 function submitAnswer() {
   let selectedAnswer = $("input[name=options]:checked").val();
-  checkUserAnswer(selectedAnswer);
+
   updateStats();
   $("#button-next-question").show();
-  //console.log(selectedAnswer);
+
+  checkUserAnswer(selectedAnswer);
 }
 
 function checkUserAnswer(selectedAnswer) {
