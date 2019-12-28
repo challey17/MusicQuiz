@@ -1,11 +1,12 @@
 let currentIndex = 0;
 let currentScore = 0;
-let questionTracker = 0;
+let questionTracker = 1;
 //this will switch over from main html to quiz html
 function startQuiz() {
   $(".start-button").on("click", function(event) {
     $("main").html(getCurrentQandA());
     bindButtons();
+    $("#button-next-question").hide();
   });
 }
 
@@ -13,12 +14,15 @@ function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
     submitAnswer();
+    checkUserAnswer(selectedAnswer);
+    updateStats();
   });
   $("#button-next-question").on("click", function(event) {
     event.preventDefault();
     currentIndex++;
     $("main").html(getCurrentQandA());
     bindButtons();
+    $("#button-next-question").hide();
   });
 }
 
@@ -50,50 +54,60 @@ function getCurrentQandA() {
            <section class="feedback-correct ">correct!</section>
            <section class="feedback-incorrect ">oops! the answer is ${questionArray[currentIndex].answer}</section>
            
-           <section class="score-display">question ${questionTracker} | score ${currentScore}</section>
+           <section class="score-display">question ${questionTracker} of 6 | score: ${currentScore} correct answers </section>
            </form>`;
   return nextQuestion;
 }
 
 function submitAnswer() {
-  // use event.which and then val for radio options?
   let selectedAnswer = $("input[name=options]:checked").val();
   checkUserAnswer(selectedAnswer);
   updateStats();
-  giveFeedback();
+  $("#button-next-question").show();
 }
 
 function checkUserAnswer(selectedAnswer) {
   if (selectedAnswer == questionArray[currentIndex].answer) {
     $(".feedback-correct").show();
+    currentScore++;
   } else {
     $(".feedback-incorrect").show();
   }
 }
 
-//when or if user submits a right answer
-function userSelectsRightAnswer() {
-  //console.log("`userSelectsRightAnswer` ran");
-}
-userSelectsRightAnswer();
-
-//when user submits wrong answer
-function userSelectsWrongAnswer() {}
-
-//tells user whether right or wrong
-function giveFeedback() {}
-
 //update score info and question number
-function updateStats() {}
+function updateStats() {
+  questionTracker++;
+}
 
 //load summary page
-function getSummaryPage() {}
+function getSummaryPage() {
+  let endPage = `<section class="end-page">
+  <p>You did great! Press Reset button to try again.</p>
+  <section class="score-display"> ${currentScore}/6 correct!</section>
+
+  <button type="submit" class="button-reset-quiz">Reset</button>
+</section>
+`;
+
+  return endPage;
+}
+function endquiz() {
+  if (currentIndex == 5) {
+    $("#button-next-question").on("click", function(event) {
+      event.preventDefault();
+
+      $("main").html(getSummaryPage());
+    });
+  }
+}
 
 //returns to start page with blank stats
 function reloadStartPage() {}
 
 function doQuiz() {
   startQuiz();
+  endquiz();
 }
 
 $(doQuiz);
