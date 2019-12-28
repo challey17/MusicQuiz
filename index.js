@@ -7,13 +7,15 @@ function startQuiz() {
     $("main").html(getCurrentQandA());
     bindButtons();
     $("#button-next-question").hide();
+    $("#button-finish").hide();
   });
 }
 
 function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
-    submitAnswer();
+    submitAnswer(selectedAnswer);
+    console.log(selectedAnswer);
     checkUserAnswer(selectedAnswer);
   });
   $("#button-next-question").on("click", function(event) {
@@ -22,6 +24,7 @@ function bindButtons() {
     $("main").html(getCurrentQandA());
     bindButtons();
     $("#button-next-question").hide();
+    $("#button-finish").hide();
   });
 }
 
@@ -49,6 +52,7 @@ function getCurrentQandA() {
     <section class="control-buttons">
                 <button type="submit" id="button-submit-answer">Submit</button>
                 <button type="submit" id="button-next-question">Next Question</button>
+                <button type="submit" id="button-finish">Finish</button>
            </section>
            <section class="feedback-correct ">correct!</section>
            <section class="feedback-incorrect ">oops! the answer is ${questionArray[currentIndex].answer}</section>
@@ -63,6 +67,7 @@ function submitAnswer() {
   checkUserAnswer(selectedAnswer);
   updateStats();
   $("#button-next-question").show();
+  //console.log(selectedAnswer);
 }
 
 function checkUserAnswer(selectedAnswer) {
@@ -93,11 +98,12 @@ function getSummaryPage() {
 
 function endquiz() {
   if (questionTracker == questionArray.length) {
-    $("#button-next-question").on("click", function(event) {
+    $("#button-finish").show();
+    /*$("#button-next-question").on("click", function(event) {
       event.preventDefault();
 
       $("main").html(getSummaryPage());
-    });
+    });*/
   }
 }
 endquiz();
@@ -106,7 +112,7 @@ function reloadStartPage() {}
 
 function doQuiz() {
   startQuiz();
-  endquiz();
+  //endquiz();
 }
 
 $(doQuiz);

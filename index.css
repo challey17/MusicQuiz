@@ -2,27 +2,39 @@
   box-sizing: border-box;
 }
 header {
+  padding-top: 3%;
   font-family: Georgia, "Times New Roman", Times, serif;
   text-align: center;
+  font-weight: bold;
 }
 
-/*body {
-  background-image: url(images/mainBG.jpg);
+body {
+  background-image: url(images/finalBG.jpg);
   background-size: cover;
-}*/
+  background-position: center;
+
+  background-clip: content-box;
+}
 
 .quiz-start-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 main {
+  background-color: rgba(243, 243, 243, 0.918);
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  width: 50vw;
+  height: 55vh;
+  justify-content: center;
   align-items: center;
+  font-size: 25px;
+  border-radius: 15px;
 }
 .feedback-correct {
   display: none;
