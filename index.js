@@ -15,6 +15,7 @@ function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
     submitAnswer();
+    endquiz();
   });
   $("#button-next-question").on("click", function(event) {
     event.preventDefault();
@@ -96,13 +97,14 @@ function getSummaryPage() {
 }
 
 function endquiz() {
-  if (questionTracker == questionArray.length) {
-    $("#button-finish").show();
-    /*$("#button-next-question").on("click", function(event) {
+  if (questionArray == questionArray.length) {
+    $("#button-submit-answer").on("click", function(event) {
       event.preventDefault();
-
-      $("main").html(getSummaryPage());
-    });*/
+      submitAnswer();
+      //endquiz();
+      $("#button-next-question").hide();
+      $("#button-finish").show();
+    });
   }
 }
 endquiz();
