@@ -15,7 +15,6 @@ function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
     submitAnswer();
-    endquiz();
   });
   $("#button-next-question").on("click", function(event) {
     event.preventDefault();
