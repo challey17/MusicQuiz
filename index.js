@@ -7,7 +7,12 @@ function startQuiz() {
     $("main").html(getCurrentQandA());
     bindButtons();
     $("#button-next-question").hide();
-    $("#button-finish").hide();
+    radioBtnDisable();
+  });
+}
+function radioBtnDisable() {
+  $("input[type=radio][name=options]").on("change", function() {
+    $("#button-submit-answer").attr("disabled", false);
   });
 }
 
@@ -16,18 +21,36 @@ function bindButtons() {
     event.preventDefault();
     submitAnswer();
   });
+
   $("#button-next-question").on("click", function(event) {
     event.preventDefault();
     currentIndex++;
     $("main").html(getCurrentQandA());
     bindButtons();
     $("#button-next-question").hide();
-    $("#button-finish").hide();
+    radioBtnDisable();
+    //$("#button-finish").hide();
   });
 }
 
 //display current question and options
+//const isLastQuestion = ( currentIndex === questionArray.length )
 function getCurrentQandA() {
+  const finishButtons = `
+    <button type="submit" disabled id="button-submit-answer">Submit</button>
+     <button hidden = "hidden" type="submit" id="button-next-question">Next Question</button>
+    <button type="submit" id="button-finish">Finish</button>
+  `;
+
+  const nextButtons = `
+    <button type="submit" disabled id="button-submit-answer">Submit</button>
+     <button type="submit" id="button-next-question">Next Question</button>
+    <button hidden = "hidden" type="submit" id="button-finish">Finish</button>
+  `;
+  const isLastQuestion = currentIndex === questionArray.length - 1;
+
+  const buttons = isLastQuestion ? finishButtons : nextButtons;
+
   let nextQuestion = `
   <form class ="quiz-form" id="qform">
             <fieldset>
@@ -48,15 +71,14 @@ function getCurrentQandA() {
              </fieldset>
   
     <section class="control-buttons">
-                <button type="submit" id="button-submit-answer">Submit</button>
-                <button type="submit" id="button-next-question">Next Question</button>
-                <button type="submit" id="button-finish">Finish</button>
+               ${buttons}
            </section>
            <section class="feedback-correct ">correct!</section>
            <section class="feedback-incorrect ">oops! the answer is ${questionArray[currentIndex].answer}</section>
            
            <section class="score-display">question ${questionTracker} of 6 | score: ${currentScore} correct answers </section>
            </form>`;
+  radioBtnDisable();
   return nextQuestion;
 }
 
@@ -95,24 +117,33 @@ function getSummaryPage() {
   return endPage;
 }
 
-function endquiz() {
-  if (questionArray == questionArray.length) {
+/*function endquiz() {
+  console.log(questionTracker)
+  console.log(questionArray.length +1)
+  console.log(questionTracker == questionArray.length +1)
+  
     $("#button-submit-answer").on("click", function(event) {
+            if (questionTracker == questionArray.length +1){
+              submitAnswer();
       event.preventDefault();
-      submitAnswer();
+      console.log("here")
+      //submitAnswer();
       //endquiz();
       $("#button-next-question").hide();
       $("#button-finish").show();
+            }
     });
-  }
-}
-endquiz();
+    console.log("test");
+  
+}*/
+//endquiz();
 //returns to start page with blank stats
 function reloadStartPage() {}
 
 function doQuiz() {
   startQuiz();
-  //endquiz();
+  //radioBtnDisable();
+  //bindButtons();
 }
 
 $(doQuiz);
