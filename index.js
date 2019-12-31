@@ -10,15 +10,24 @@ function startQuiz() {
     radioBtnDisable();
   });
 }
+//submit btn only appears after a radio btn has been selected
 function radioBtnDisable() {
   $("input[type=radio][name=options]").on("change", function() {
     $("#button-submit-answer").attr("disabled", false);
   });
 }
 
+/*function finishBtnDisable() {
+  $("#button-submit-answer").on("change", function() {
+    $("#button-finish").attr("disabled", false);
+    $("#button-next-question").hide();
+  });
+}*/
+
 function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
+    $("#button-next-question").show();
     submitAnswer();
   });
 
@@ -29,17 +38,16 @@ function bindButtons() {
     bindButtons();
     $("#button-next-question").hide();
     radioBtnDisable();
+
     //$("#button-finish").hide();
   });
 }
 
-//display current question and options
-//const isLastQuestion = ( currentIndex === questionArray.length )
 function getCurrentQandA() {
   const finishButtons = `
     <button type="submit" disabled id="button-submit-answer">Submit</button>
-     <button hidden = "hidden" type="submit" id="button-next-question">Next Question</button>
-    <button type="submit" id="button-finish">Finish</button>
+     <button hidden = "hidden" disabled type="submit" id="button-next-question">Next Question</button>
+    <button type="submit"  id="button-finish">Finish</button>
   `;
 
   const nextButtons = `
@@ -79,6 +87,7 @@ function getCurrentQandA() {
            <section class="score-display">question ${questionTracker} of 6 | score: ${currentScore} correct answers </section>
            </form>`;
   radioBtnDisable();
+
   return nextQuestion;
 }
 
@@ -86,7 +95,7 @@ function submitAnswer() {
   let selectedAnswer = $("input[name=options]:checked").val();
 
   updateStats();
-  $("#button-next-question").show();
+  //$("#button-next-question").show();
 
   checkUserAnswer(selectedAnswer);
 }
@@ -142,6 +151,7 @@ function reloadStartPage() {}
 
 function doQuiz() {
   startQuiz();
+  //getCurrentQandA(isLastQuestion);
   //radioBtnDisable();
   //bindButtons();
 }
