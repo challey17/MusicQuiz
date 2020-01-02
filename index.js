@@ -5,10 +5,8 @@ let questionTracker = 1;
 function startQuiz() {
   $(".start-button").on("click", function(event) {
     $("main").html(getCurrentQandA());
-
     bindButtons();
     $("#button-next-question").hide();
-
     radioBtnDisable();
     finishBtnEnable();
     listenForFinish();
@@ -31,9 +29,7 @@ function finishBtnEnable() {
 function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
-
     $("#button-next-question").show();
-
     submitAnswer();
     $("#button-submit-answer").attr("disabled", true);
   });
@@ -44,7 +40,6 @@ function bindButtons() {
     $("main").html(getCurrentQandA());
     bindButtons();
     $("#button-next-question").hide();
-
     radioBtnDisable();
     finishBtnEnable();
     listenForFinish();
@@ -94,18 +89,13 @@ function getCurrentQandA() {
            
            <section class="score-display">${questionTracker} of 6 | score: ${currentScore} correct answers </section>
            </form>`;
-  radioBtnDisable();
-  finishBtnEnable();
-  listenForFinish();
 
   return nextQuestion;
 }
 
 function submitAnswer() {
   let selectedAnswer = $("input[name=options]:checked").val();
-
   updateStats();
-
   checkUserAnswer(selectedAnswer);
 }
 
@@ -122,7 +112,7 @@ function checkUserAnswer(selectedAnswer) {
 function updateStats() {
   questionTracker++;
 }
-
+// event set up for finish btn
 function listenForFinish() {
   $("#button-finish").on("click", function(event) {
     event.preventDefault();
@@ -156,12 +146,6 @@ function reloadStartPage() {
 
 function doQuiz() {
   startQuiz();
-  //reStart();
-
-  //listenForFinish();
-  //getCurrentQandA(isLastQuestion);
-  //radioBtnDisable();
-  //bindButtons();
 }
 
 $(doQuiz);
