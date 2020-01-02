@@ -13,7 +13,8 @@ body {
   background-size: cover;
   background-position: center;
 
-  background-clip: content-box;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .quiz-start-page {
@@ -29,8 +30,11 @@ main {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  width: 50vw;
-  height: 55vh;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  width: 90vw;
+  height: 60vh;
   justify-content: center;
   align-items: center;
   font-size: 25px;
@@ -41,6 +45,9 @@ main {
 }
 .feedback-incorrect {
   display: none;
+}
+.end-page {
+  text-align: center;
 }
 /*
 .score-display{
