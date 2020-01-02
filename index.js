@@ -1,13 +1,17 @@
 let currentIndex = 0;
 let currentScore = 0;
 let questionTracker = 1;
-//this will switch over from main html to quiz html
+//this will switch over from start html to quiz html
 function startQuiz() {
   $(".start-button").on("click", function(event) {
     $("main").html(getCurrentQandA());
+
     bindButtons();
     $("#button-next-question").hide();
+
     radioBtnDisable();
+    finishBtnEnable();
+    listenForFinish();
   });
 }
 //submit btn only appears after a radio btn has been selected
@@ -16,19 +20,22 @@ function radioBtnDisable() {
     $("#button-submit-answer").attr("disabled", false);
   });
 }
-
-/*function finishBtnDisable() {
-  $("#button-submit-answer").on("change", function() {
+//finish btn appears after submit is clicked on last question, enabled by clicking submit
+function finishBtnEnable() {
+  $("#button-submit-answer").on("click", function() {
+    event.preventDefault();
     $("#button-finish").attr("disabled", false);
-    $("#button-next-question").hide();
   });
-}*/
-
+}
+//sets up submit btn during quiz
 function bindButtons() {
   $("#button-submit-answer").on("click", function(event) {
     event.preventDefault();
+
     $("#button-next-question").show();
+
     submitAnswer();
+    $("#button-submit-answer").attr("disabled", true);
   });
 
   $("#button-next-question").on("click", function(event) {
@@ -37,9 +44,10 @@ function bindButtons() {
     $("main").html(getCurrentQandA());
     bindButtons();
     $("#button-next-question").hide();
-    radioBtnDisable();
 
-    //$("#button-finish").hide();
+    radioBtnDisable();
+    finishBtnEnable();
+    listenForFinish();
   });
 }
 
@@ -47,7 +55,7 @@ function getCurrentQandA() {
   const finishButtons = `
     <button type="submit" disabled id="button-submit-answer">Submit</button>
      <button hidden = "hidden" disabled type="submit" id="button-next-question">Next Question</button>
-    <button type="submit"  id="button-finish">Finish</button>
+    <button type="submit" disabled id="button-finish">Finish</button>
   `;
 
   const nextButtons = `
@@ -87,6 +95,8 @@ function getCurrentQandA() {
            <section class="score-display">question ${questionTracker} of 6 | score: ${currentScore} correct answers </section>
            </form>`;
   radioBtnDisable();
+  finishBtnEnable();
+  listenForFinish();
 
   return nextQuestion;
 }
@@ -95,7 +105,6 @@ function submitAnswer() {
   let selectedAnswer = $("input[name=options]:checked").val();
 
   updateStats();
-  //$("#button-next-question").show();
 
   checkUserAnswer(selectedAnswer);
 }
@@ -114,43 +123,42 @@ function updateStats() {
   questionTracker++;
 }
 
+function listenForFinish() {
+  $("#button-finish").on("click", function(event) {
+    event.preventDefault();
+    $("main").html(getSummaryPage());
+    reStart();
+  });
+}
+
 //load summary page
 function getSummaryPage() {
   let endPage = `<section class="end-page">
   <p>You did great! Press Reset button to try again.</p>
   <section class="score-display"> ${currentScore}/6 correct!</section>
 
-  <button type="submit" class="button-reset-quiz">Reset</button>
+  <button type="submit" id="button-reset-quiz">Reset</button>
 </section>
 `;
   return endPage;
 }
+function reStart() {
+  $("#button-reset-quiz").on("click", function(event) {
+    event.preventDefault();
+    reloadStartPage();
+  });
+}
 
-/*function endquiz() {
-  console.log(questionTracker)
-  console.log(questionArray.length +1)
-  console.log(questionTracker == questionArray.length +1)
-  
-    $("#button-submit-answer").on("click", function(event) {
-            if (questionTracker == questionArray.length +1){
-              submitAnswer();
-      event.preventDefault();
-      console.log("here")
-      //submitAnswer();
-      //endquiz();
-      $("#button-next-question").hide();
-      $("#button-finish").show();
-            }
-    });
-    console.log("test");
-  
-}*/
-//endquiz();
 //returns to start page with blank stats
-function reloadStartPage() {}
+function reloadStartPage() {
+  location.reload();
+}
 
 function doQuiz() {
   startQuiz();
+  //reStart();
+
+  //listenForFinish();
   //getCurrentQandA(isLastQuestion);
   //radioBtnDisable();
   //bindButtons();
