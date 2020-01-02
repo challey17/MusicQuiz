@@ -92,7 +92,7 @@ function getCurrentQandA() {
            <section class="feedback-correct ">correct!</section>
            <section class="feedback-incorrect ">oops! the answer is ${questionArray[currentIndex].answer}</section>
            
-           <section class="score-display">question ${questionTracker} of 6 | score: ${currentScore} correct answers </section>
+           <section class="score-display">${questionTracker} of 6 | score: ${currentScore} correct answers </section>
            </form>`;
   radioBtnDisable();
   finishBtnEnable();
